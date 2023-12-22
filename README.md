@@ -1,22 +1,24 @@
-# **repo-sync**
+# **repoverse**
 
-`repo-sync` is an NPM package designed for microservices where some part of the code needs to be synchronized across multiple repositories. `repo-sync` can be used both as part of an automated CI/CD pipeline with GitHub Actions or programmatically in Node.js scripts for more contolled and custom synchronization triggers. It proporgates the commits in any of the repositories to all the repos in the config.
+`repoverse` is a tool for distributed systems and microservices where some part of the code needs to be synchronized across multiple repositories. It propagates commits across all the repositories in the configuration, ensuring up-to-date synchronization.
+
 
 ## **Installation**
 
-To install `repo-sync`, run the following command:
+To install `repoverse`, run the following command:
 
 ```bash
-npm install repo-sync
+npm install repoverse
 ```
 
 ## **Usage**
 
-`repo-sync` can be used in two different ways:
+`repoverse` can be used in two different ways:
 
 ### **1. As a GitHub Action**
 
-For automatic synchronization upon specific GitHub events, use `repo-sync` in your GitHub Actions workflow.
+Automate changes synchronization based on GitHub push events by using repoverse within your GitHub Actions workflows.
+Create a workflow file, for example, .github/workflows/sync.yml in your repository:
 
 In your repository, create a GitHub Actions workflow file at `.github/workflows/sync.yml`:
 
@@ -31,51 +33,42 @@ on:
       - 'path/to/sync/**'
 
 jobs:
-  sync-repositories:
-    name: Sync Repositories with repo-sync
+  repo-sync:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
         with:
-          node-version: '14' # Set this to the node version you need
-
-      - name: Install repo-sync
-        run: npm install repo-sync
-
-      - name: Execute repo-sync
-        env: # Define environment variables
-          REPO_SYNC_CONFIG: ${{ secrets.REPO_SYNC_CONFIG }} # JSON config as a secret
-          COMMITS: ${{ toJson(github.event.commits) }} # Serialize commit data
-          REPOSITORY: ${{ github.repository }} # Repository name ('owner/repo')
+          node-version: '20'
+      - run: npm install repoverse
+      - name: Run repoverse synchronization
+        env:
+          REPOVERSE_CONFIG: ${{ secrets.REPOVERSE_CONFIG }}
+          COMMITS: ${{ toJson(github.event.commits) }}
+          REPOSITORY: ${{ github.repository }}
         run: |
-          echo "Executing repo-sync with repositories..."
+          echo "Running repoverse synchronization..."
           node -e "
-            const RepoSyncService = require('repo-sync');     // Import your package
-            const config = JSON.parse(process.env.REPO_SYNC_CONFIG);
-            const service = new RepoSyncService(config);      // Instantiate service
-            const commits = JSON.parse(process.env.COMMITS);  // Parse commit data
-            const repository = process.env.REPOSITORY;        // Get repository name
+            const Repoverse = require('repoverse');
+            const config = JSON.parse(process.env.REPOVERSE_CONFIG);
+            const repoverse = new Repoverse(config);
+            const commits = JSON.parse(process.env.COMMITS); 
+            const repository = process.env.REPOSITORY;
 
-            // Execute sync with deserialized data
-            service.execute(repository, commits)
-              .then(() => console.log('Synchronized successfully'))
+            repoverse.synchronize(repository, commits)
+              .then(() => console.log('Repositories synchronized successfully'))
               .catch(error => console.error('Synchronization failed:', error));
           "
 ```
 
-Ensure the `RE` secrets are set in your repository's settings. These should hold your configuration JSON and GitHub access token, respectively.
+Make sure that the REPOVERSE_CONFIG secret is created in your repository's settings, containing the synchronization configuration in JSON format.
 
 ### **2. Programmatically in Your Code**
 
-For cases where you need more control over synchronization, such as doing it on-demand or triggering from a cron server, you can invoke the `repo-sync` API directly:
+For on-demand synchronization or when you require more control over the process, use the repoverse API directly in your Node.js applications:
 
 ```javascript
-const RepoSyncService = require('repo-sync');
+const Repoverse = require('repoverse');
 
 // Construct a configuration object for your repositories and settings
 const config = {
@@ -97,13 +90,12 @@ const config = {
   accessToken: 'ghp_YourGitHubPersonalAccessTokenHere',
 };
 
-// Create an instance of the service
-const service = new RepoSyncService(config);
+const repoverse = new Repoverse(config);
 
-// Example repository information and commits
-// Source repo shoule be in the config repositories list
-const sourceRepo = 'example-user/repo-to-sync-1';
+// Source repository should be in the 'owner/repo' format and present in the config's repositories list
+const sourceRepo = 'your-organization/source-repo';
 const commits = [
+  // Your array of commit objects to synchronize
   {
     author: {
       email: 'author@example.com',
@@ -122,16 +114,16 @@ const commits = [
     tree_id: 'def123456abc7890def123456abc7890def12345',
     url: 'https://github.com/example-user/repo-to-sync-1/commit/def1234567890abcdef1234567890abcdef',
   },
-  // ...Commits data
 ];
 
-// Execute synchronization action
-service
-  .execute(sourceRepo, commits)
+repoverse.synchronize(sourceRepo, commits)
   .then(() => console.log('Synchronization successful'))
-  .catch(error => console.error('Synchronization failed', error));
+  .catch(error => console.error('Synchronization failed:', error));
 ```
 
 ## **Contributing**
 
-We welcome contributions that make this tool more helpful! Please submit issues or pull requests with your proposed changes or enhancements.
+Contributions to `repoverse` are highly encouraged! If you have a suggestion, fix, or enhancement, please open an issue or a pull request. Help us make repository synchronization seamless for developers.
+
+Ensure the phrases and variables are updated to align with your package's API. The usage instructions provided should precisely match how your package is intended to be used.
+
