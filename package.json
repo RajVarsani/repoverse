@@ -1,7 +1,7 @@
 {
-  "name": "repo-sync",
+  "name": "repoverse",
   "version": "0.0.0-development",
-  "description": "A template for creating npm packages using TypeScript and VSCode",
+  "description": "Tool for syncronising common code across multiple repositories",
   "main": "./lib/index.js",
   "files": [
     "lib/**/*"
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RajVarsani/repo-sync.git"
+    "url": "git+https://github.com/RajVarsani/repoverse.git"
   },
   "license": "MIT",
   "author": {
@@ -42,9 +42,9 @@
     "codecov"
   ],
   "bugs": {
-    "url": "https://github.com/RajVarsani/repo-sync/issues"
+    "url": "https://github.com/RajVarsani/repoverse/issues"
   },
-  "homepage": "https://github.com/RajVarsani/repo-sync#readme",
+  "homepage": "https://github.com/RajVarsani/repoverse#readme",
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",
     "@ryansonshine/commitizen": "^4.2.8",
