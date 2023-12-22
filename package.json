@@ -1,5 +1,5 @@
 {
-  "name": "typescript-npm-package-template",
+  "name": "repo-sync",
   "version": "0.0.0-development",
   "description": "A template for creating npm packages using TypeScript and VSCode",
   "main": "./lib/index.js",
@@ -19,13 +19,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ryansonshine/typescript-npm-package-template.git"
+    "url": "git+https://github.com/RajVarsani/repo-sync.git"
   },
   "license": "MIT",
   "author": {
-    "name": "Ryan Sonshine",
-    "email": "ryansonshine@users.noreply.github.com",
-    "url": "https://github.com/ryansonshine"
+    "name": "Raj Varsani",
+    "email": "rajvarsani@users.noreply.github.com",
+    "url": "https://github.com/rajvarsani"
   },
   "engines": {
     "node": ">=12.0"
@@ -42,10 +42,11 @@
     "codecov"
   ],
   "bugs": {
-    "url": "https://github.com/ryansonshine/typescript-npm-package-template/issues"
+    "url": "https://github.com/RajVarsani/repo-sync/issues"
   },
-  "homepage": "https://github.com/ryansonshine/typescript-npm-package-template#readme",
+  "homepage": "https://github.com/RajVarsani/repo-sync#readme",
   "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
     "@ryansonshine/commitizen": "^4.2.8",
     "@ryansonshine/cz-conventional-changelog": "^3.3.4",
     "@types/jest": "^27.5.2",
@@ -118,5 +119,8 @@
       "@semantic-release/npm",
       "@semantic-release/github"
     ]
+  },
+  "dependencies": {
+    "@octokit/rest": "^20.0.2"
   }
 }
