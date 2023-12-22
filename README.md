@@ -1,20 +1,14 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [**repoverse**](#repoverse)
-  - [**Installation**](#installation)
-  - [**Usage**](#usage)
-    - [**1. As a GitHub Action**](#1-as-a-github-action)
-    - [**2. Programmatically in Your Code**](#2-programmatically-in-your-code)
-  - [**Contributing**](#contributing)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # **repoverse**
 
 `repoverse` is a tool for distributed systems and microservices where some part of the code needs to be synchronized across multiple repositories. It propagates commits across all the repositories in the configuration, ensuring up-to-date synchronization.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+  - [As a GitHub Action](#1-as-a-github-action)
+  - [Programmatically in Your Code](#2-programmatically-in-your-code)
+- [Contributing](#contributing)
 
 ## **Installation**
 
