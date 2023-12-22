@@ -1,6 +1,6 @@
 # **repo-sync**
 
-`repo-sync` is an NPM package designed for microservices where some part of the code needs to be synchronized across multiple repositories. `repo-sync` can be used both as part of an automated CI/CD pipeline with GitHub Actions or programmatically in Node.js scripts for more contolled and custom synchronization triggers.
+`repo-sync` is an NPM package designed for microservices where some part of the code needs to be synchronized across multiple repositories. `repo-sync` can be used both as part of an automated CI/CD pipeline with GitHub Actions or programmatically in Node.js scripts for more contolled and custom synchronization triggers. It proporgates the commits in any of the repositories to all the repos in the config.
 
 ## **Installation**
 
