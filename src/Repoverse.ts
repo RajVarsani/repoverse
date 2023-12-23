@@ -7,7 +7,15 @@ interface RepositoryConfig {
   repo: string;
   path: string;
   branch: string;
+  reviewers: string[];
 }
+
+export interface RepoverseConfig {
+  repositories: RepositoryConfig[];
+  syncBranchPrefix: string;
+  accessToken: string;
+}
+
 interface CommitDataCache {
   [key: string]: CommitData & {
     blobCache: {
@@ -17,14 +25,10 @@ interface CommitDataCache {
 }
 
 class Repoverse {
-  private config: {
-    repositories: RepositoryConfig[];
-    syncBranchPrefix: string;
-    accessToken: string;
-  };
+  private config: RepoverseConfig;
   private octokit: Octokit;
 
-  constructor(config: typeof Repoverse.prototype.config) {
+  constructor(config: RepoverseConfig) {
     this.config = config;
     this.octokit = new Octokit({
       auth: this.config.accessToken,
@@ -171,7 +175,13 @@ class Repoverse {
     targetRepoConfig: RepositoryConfig,
     syncBranchName: string
   ): Promise<void> {
-    const { owner, repo, path: targetPath, branch } = targetRepoConfig;
+    const {
+      owner,
+      repo,
+      path: targetPath,
+      branch,
+      reviewers,
+    } = targetRepoConfig;
     if (sourceRepoConfig.owner === owner && sourceRepoConfig.repo === repo) {
       return;
     }
@@ -322,7 +332,7 @@ class Repoverse {
       owner: owner,
       repo: repo,
       pull_number: raisedPR.data.number,
-      reviewers: [owner],
+      reviewers: reviewers,
     });
 
     console.log(

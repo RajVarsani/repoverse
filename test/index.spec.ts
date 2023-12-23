@@ -75,6 +75,7 @@ function generateFakeRepositoryConfig() {
     repo: faker.system.commonFileName(),
     path: faker.system.filePath(),
     branch: `branch-${faker.lorem.word()}`,
+    reviewers: [faker.internet.userName()],
   };
 }
 
@@ -239,7 +240,7 @@ describe('Repoverse', () => {
               };
             }
           ).data.number,
-          reviewers: [targetRepositoryConfigs[index].owner],
+          reviewers: targetRepositoryConfigs[index].reviewers,
         });
       }
 
