@@ -1,14 +1,48 @@
 # **repoverse**
 
-`repoverse` is a tool for distributed systems and microservices where some part of the code needs to be synchronized across multiple repositories. It propagates commits across all the repositories in the configuration, ensuring up-to-date synchronization.
+## Overview
+  
+`repoverse` is a tool for distributed systems and microservices where some part of the code needs to be synchronized across multiple repositories. Repoverse automates the propograiton of relavent commits across multiple repositories, ensuring consistency and saving you time.
 
-## Table of Contents
+## Key Features:
 
-- [Installation](#installation)
-- [Usage](#usage)
-  - [As a GitHub Action](#1-as-a-github-action)
-  - [Programmatically in Your Code](#2-programmatically-in-your-code)
-- [Contributing](#contributing)
+- Automated synchronization: Propagates commits across all configured repositories, keeping them up-to-date.
+- Flexible usage: Works as a GitHub Action or directly in your Node.js applications.
+- Precise control: Synchronize specific paths and branches within repositories.
+- Seamless integration: Integrates effortlessly into your development workflows.
+- Collaborative synchronization: Raises pull requests for review and approval, ensuring code quality and alignment.
+
+## Prerequisites
+
+- Node.js (version 14 or higher)
+- npm (or another package manager)
+- A GitHub personal access token with access to all the repositories
+
+## Configuration
+
+Repoverse requires a configuration object to specify the repositories to sync and other settings. Here's an example:
+
+```JSON
+{
+  "repositories": [
+    {
+      "owner": "example-user",
+      "repo": "repo-to-sync-1",
+      "path": "models/",  
+      "branch": "dev"    
+    },
+    {
+      "owner": "example-user",
+      "repo": "repo-to-sync-2",
+      "path": "models/",
+      "branch": "dev"
+    }
+  ],
+  "syncBranchPrefix": "sync-branch",
+  "accessToken": "ghp_YourGitHubPersonalAccessTokenHere"
+}
+```
+
 
 ## **Installation**
 
@@ -24,11 +58,14 @@ npm install repoverse
 
 ### **1. As a GitHub Action**
 
-Automate changes synchronization based on GitHub push events by using repoverse within your GitHub Actions workflows.
-Create a workflow file, for example, .github/workflows/sync.yml in your repository:
+Automate synchronization based on GitHub push events:
 
-In your repository, create a GitHub Actions workflow file at `.github/workflows/sync.yml`:
+- Create a workflow file (e.g., `.github/workflows/sync.yml`) in your repository.
+- Define the workflow, including triggers, jobs, and steps.
+- Use the `repoverse` action within your job to perform synchronization.
 
+Example workflow:
+- Make sure that the `REPOVERSE_CONFIG` secret is created in your repository's settings, containing the synchronization configuration in `JSON` format.
 ```yaml
 name: Repository Sync
 
@@ -68,33 +105,21 @@ jobs:
           "
 ```
 
-Make sure that the REPOVERSE_CONFIG secret is created in your repository's settings, containing the synchronization configuration in JSON format.
-
 ### **2. Programmatically in Your Code**
 
-For on-demand synchronization or when you require more control over the process, use the repoverse API directly in your Node.js applications:
+Synchronize code on-demand or with more control:
+
+- Import the Repoverse module in your Node.js application.
+- Create a configuration object specifying repositories and settings.
+- Instantiate a Repoverse instance with the configuration.
+- Use the synchronize method to trigger synchronization.
 
 ```javascript
 const Repoverse = require('repoverse');
 
 // Construct a configuration object for your repositories and settings
 const config = {
-  repositories: [
-    {
-      owner: 'example-user',
-      repo: 'repo-to-sync-1',
-      path: 'models/',
-      branch: 'dev',
-    },
-    {
-      owner: 'example-user',
-      repo: 'repo-to-sync-2',
-      path: 'models/',
-      branch: 'dev',
-    },
-  ],
-  syncBranchPrefix: 'sync-branch',
-  accessToken: 'ghp_YourGitHubPersonalAccessTokenHere',
+  // your config here
 };
 
 const repoverse = new Repoverse(config);
@@ -128,9 +153,19 @@ repoverse.synchronize(sourceRepo, commits)
   .catch(error => console.error('Synchronization failed:', error));
 ```
 
+## Workflow:
+
+- Repoverse identifies changes in a source repository(one of the repo in config).
+- Creates corresponding branches (prefixed with a configured value) in target(reamining) repositories.
+- Applies the changes to those branches and commits them.
+- Raises pull requests in the target repositories, inviting review and approval before merging.
+
 ## **Contributing**
 
 Contributions to `repoverse` are highly encouraged! If you have a suggestion, fix, or enhancement, please open an issue or a pull request. Help us make repository synchronization seamless for developers.
 
-Ensure the phrases and variables are updated to align with your package's API. The usage instructions provided should precisely match how your package is intended to be used.
+## License
+
+Repoverse is licensed under the MIT License.
+
 
