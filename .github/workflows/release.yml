@@ -9,6 +9,9 @@ on:
       NPM_TOKEN:
         required: true
 
+permissions:
+  contents: write
+
 jobs:
   release:
     name: Release to NPM
