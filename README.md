@@ -96,7 +96,7 @@ on:
       - 'path/to/sync/**'
 
 jobs:
-  repo-sync:
+  repoverse:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

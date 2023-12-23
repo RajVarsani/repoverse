@@ -1,6 +1,6 @@
 import { Octokit } from '@octokit/rest';
-import { GitHubCommitInfo } from '../types/github';
-import { BlobData, CommitData } from '../types/octokit';
+import { GitHubCommitInfo } from './types/github';
+import { BlobData, CommitData } from './types/octokit';
 
 interface RepositoryConfig {
   owner: string;
@@ -16,16 +16,15 @@ interface CommitDataCache {
   };
 }
 
-class RepoSyncService {
+class Repoverse {
   private config: {
     repositories: RepositoryConfig[];
     syncBranchPrefix: string;
     accessToken: string;
   };
   private octokit: Octokit;
-  repoSyncService: any;
 
-  constructor(config: typeof RepoSyncService.prototype.config) {
+  constructor(config: typeof Repoverse.prototype.config) {
     this.config = config;
     this.octokit = new Octokit({
       auth: this.config.accessToken,
@@ -35,7 +34,7 @@ class RepoSyncService {
   /**
    * Process the action of syncing the commits from one repository to rest of the repositories
    */
-  public async execute(
+  public async synchronize(
     sourceRepository: string,
     commits: GitHubCommitInfo[]
   ): Promise<void> {
@@ -74,7 +73,7 @@ class RepoSyncService {
     }
   }
 
-  public getConfig(): typeof RepoSyncService.prototype.config {
+  public getConfig(): typeof Repoverse.prototype.config {
     return this.config;
   }
 
@@ -478,4 +477,4 @@ class RepoSyncService {
   }
 }
 
-export default RepoSyncService;
+export default Repoverse;
