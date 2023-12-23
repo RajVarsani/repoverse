@@ -112,7 +112,7 @@ jobs:
         run: |
           echo "Running repoverse synchronization..."
           node -e "
-            const {Repoverse} = require('repoverse');
+            const Repoverse = require('repoverse');
             const config = JSON.parse(process.env.REPOVERSE_CONFIG);
             const repoverse = new Repoverse(config);
             const commits = JSON.parse(process.env.COMMITS); 
@@ -134,7 +134,7 @@ Synchronize code on-demand or with more control:
 - Use the synchronize method to trigger synchronization.
 
 ```javascript
-const { Repoverse } = require('repoverse');
+const Repoverse = require('repoverse');
 
 // Construct a configuration object for your repositories and settings
 const config = {

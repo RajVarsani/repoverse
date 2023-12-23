@@ -196,7 +196,7 @@ class Repoverse {
     for (const commit of distinctCommits) {
       const commitData = commitDataCache[commit.id];
       const affectedFiles = commitData.data.files;
-      if (!affectedFiles) {
+      if (!affectedFiles?.length) {
         continue;
       }
 

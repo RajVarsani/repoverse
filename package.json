@@ -1,10 +1,10 @@
 {
   "name": "repoverse",
-  "version": "0.0.3-beta",
+  "version": "0.0.9-development",
   "description": "Tool for syncronising common code across multiple repositories",
   "main": "./lib/index.js",
   "files": [
-    "lib/**/*"
+    "./lib/**/*"
   ],
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
