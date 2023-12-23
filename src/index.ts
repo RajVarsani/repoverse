@@ -1,2 +1,2 @@
-import Repoverse from './Repoverse';
-export default Repoverse;
+export { default as Repoverse } from './Repoverse';
+export { default } from './Repoverse';
