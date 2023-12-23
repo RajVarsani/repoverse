@@ -242,6 +242,25 @@ describe('Repoverse', () => {
           reviewers: [targetRepositoryConfigs[index].owner],
         });
       }
+
+      // reset get commit mock to default implementation
+      mocks.repos.getCommit.mockResolvedValue({
+        data: {
+          files: [
+            {
+              filename: `${faker.system.filePath()}${faker.system.fileName()}`,
+              sha: faker.git.commitSha(),
+              status: ['added', 'modified', 'removed', 'renamed'][
+                faker.datatype.number({
+                  min: 0,
+                  max: 3,
+                })
+              ],
+              previous_filename: faker.system.fileName(),
+            },
+          ],
+        },
+      });
     });
 
     it('should throw an error for invalid source repository format', async () => {
@@ -262,6 +281,51 @@ describe('Repoverse', () => {
       ).rejects.toThrow(
         'Source repository nonexistent/owner-repo is not in the list of repositories to sync'
       );
+    });
+
+    it('should handle error when fetching the latest commit SHA fails', async () => {
+      const sourceRepository = `${exampleConfig.repositories[0].owner}/${exampleConfig.repositories[0].repo}`;
+      const commits = [
+        generateFakeGitHubCommitInfo({ override: { distinct: true } }),
+      ];
+
+      mocks.git.getRef.mockRejectedValueOnce(
+        new Error('Error fetching latest commit SHA')
+      );
+
+      await expect(
+        repoverse.synchronize(sourceRepository, commits)
+      ).rejects.toThrow('Error fetching latest commit SHA');
+    });
+
+    it('should handle error when creating a branch reference fails', async () => {
+      const sourceRepository = `${exampleConfig.repositories[0].owner}/${exampleConfig.repositories[0].repo}`;
+      const commits = [
+        generateFakeGitHubCommitInfo({ override: { distinct: true } }),
+      ];
+
+      mocks.git.createRef.mockRejectedValueOnce(
+        new Error('Error creating branch reference')
+      );
+
+      await expect(
+        repoverse.synchronize(sourceRepository, commits)
+      ).rejects.toThrow('Error creating branch reference');
+    });
+
+    it('should handle error during commit data caching', async () => {
+      const sourceRepository = `${exampleConfig.repositories[0].owner}/${exampleConfig.repositories[0].repo}`;
+      const commits = [
+        generateFakeGitHubCommitInfo({ override: { distinct: true } }),
+      ];
+
+      mocks.repos.getCommit.mockImplementationOnce(() => {
+        throw new Error('Error caching commit data');
+      });
+
+      await expect(
+        repoverse.synchronize(sourceRepository, commits)
+      ).rejects.toThrow('Error caching commit data');
     });
   });
 });
