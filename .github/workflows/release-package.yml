@@ -1,5 +1,6 @@
 name: Release
 
+# Trigger the workflow on pushes to the main branch, as well as workflow calls
 on:
   push:
     branches:
@@ -9,32 +10,38 @@ on:
       NPM_TOKEN:
         required: true
 
-permissions:
-  contents: write
-
 jobs:
   release:
     name: Release to NPM
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
+          # Perform a full git history checkout to enable semantic-release analysis
           fetch-depth: 0
-      - name: Setup Node.js Environment
-        uses: actions/setup-node@v3
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: lts/*
+          bun-version: 'latest'
+
       - name: Install Dependencies
-        run: npm i
+        run: bun install
+        # Use Bun to install dependencies faster
+
       - name: Build Project
-        run: npm run build
-      - name: Run Test Suite
-        run: npm run test
-      - name: Semantic Release
+        run: bun run build
+
+      - name: Run Tests
+        run: bun run test
+
+      - name: Release to NPM
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
+        run: bun x semantic-release
+
       - name: Upload Code Coverage
         uses: codecov/codecov-action@v3.1.0
