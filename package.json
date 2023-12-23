@@ -1,6 +1,6 @@
 {
   "name": "repoverse",
-  "version": "0.0.10-development",
+  "version": "1.0.0",
   "description": "Tool for syncronising common code across multiple repositories",
   "main": "./lib/index.js",
   "files": [
