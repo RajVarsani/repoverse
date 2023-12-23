@@ -1,6 +1,6 @@
 {
   "name": "repoverse",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tool for syncronising common code across multiple repositories",
   "main": "./lib/index.js",
   "files": [
@@ -31,15 +31,26 @@
     "node": ">=12.0"
   },
   "keywords": [
-    "boilerplate",
-    "template",
-    "typescript",
-    "vscode",
-    "jest",
-    "husky",
-    "commitizen",
-    "semantic-release",
-    "codecov"
+    "repoverse",
+    "repository-sync",
+    "git-synchronization",
+    "code-sharing",
+    "code-sync",
+    "multi-repo-management",
+    "repository-management",
+    "cross-repository",
+    "commit-propagation",
+    "sync-commits",
+    "microservices",
+    "monorepo",
+    "multi-repo",
+    "ci-cd",
+    "github-actions",
+    "devops",
+    "version-control",
+    "git-automation",
+    "nodejs",
+    "javascript"
   ],
   "bugs": {
     "url": "https://github.com/RajVarsani/repoverse/issues"
