@@ -3,14 +3,14 @@
 ## Table of Contents:
 
 - [Overview](#overview)
-- [Key Features:](#key-features)
+- [Key Features](#key-features)
 - [Prerequisites](#prerequisites)
 - [Configuration](#configuration)
 - [**Installation**](#installation)
 - [**Usage**](#usage)
   - [**1. As a GitHub Action**](#1-as-a-github-action)
   - [**2. Programmatically in Your Code**](#2-programmatically-in-your-code)
-- [Workflow:](#workflow)
+- [**Workflow**](#workflow)
 - [**Contributing**](#contributing)
 - [License](#license)
 
@@ -18,7 +18,7 @@
   
 `repoverse` is a tool for distributed systems and microservices where some part of the code needs to be synchronized across multiple repositories. Repoverse automates the propograiton of relavent commits across multiple repositories, ensuring consistency and saving you time.
 
-## Key Features:
+## Key Features
 
 - Automated synchronization: Propagates commits across all configured repositories, keeping them up-to-date.
 - Flexible usage: Works as a GitHub Action or directly in your Node.js applications.
@@ -167,7 +167,7 @@ repoverse.synchronize(sourceRepo, commits)
   .catch(error => console.error('Synchronization failed:', error));
 ```
 
-## Workflow:
+## Workflow
 
 - Repoverse identifies changes in a source repository(one of the repo in config).
 - Creates corresponding branches (prefixed with a configured value) in target(reamining) repositories.
