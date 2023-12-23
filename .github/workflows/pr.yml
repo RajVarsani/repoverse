@@ -6,4 +6,15 @@ on: [pull_request]
 
 jobs:
   build:
-    uses: ryansonshine/ryansonshine/.github/workflows/pr.yml@main
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - run: bun i
+      - run: bun run build
+      - run: bun run test
+      - name: Upload Code Coverage
+        uses: codecov/codecov-action@v3.1.0
