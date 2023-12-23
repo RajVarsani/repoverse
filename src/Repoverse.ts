@@ -262,7 +262,7 @@ class Repoverse {
                   owner,
                   repo,
                   targetFilePath,
-                  file.sha,
+                  targetFileSha,
                   syncBranchName
                 );
               }
