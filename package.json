@@ -6,7 +6,7 @@
   "files": [
     "lib/**/*"
   ],
-    "scripts": {
+  "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf ./lib/",
     "cm": "cz",
