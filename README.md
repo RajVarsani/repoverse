@@ -1,5 +1,19 @@
 # **repoverse**
 
+## Table of Contents:
+
+- [Overview](#overview)
+- [Key Features:](#key-features)
+- [Prerequisites](#prerequisites)
+- [Configuration](#configuration)
+- [**Installation**](#installation)
+- [**Usage**](#usage)
+  - [**1. As a GitHub Action**](#1-as-a-github-action)
+  - [**2. Programmatically in Your Code**](#2-programmatically-in-your-code)
+- [Workflow:](#workflow)
+- [**Contributing**](#contributing)
+- [License](#license)
+
 ## Overview
   
 `repoverse` is a tool for distributed systems and microservices where some part of the code needs to be synchronized across multiple repositories. Repoverse automates the propograiton of relavent commits across multiple repositories, ensuring consistency and saving you time.
