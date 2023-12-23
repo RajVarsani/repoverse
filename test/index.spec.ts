@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Octokit } from '@octokit/rest';
-import RepoSyncService from '../src';
+import Repoverse from '../src';
 
 const mocks = {
   repos: {
@@ -87,26 +87,26 @@ function generateFakeConfig() {
   };
 }
 
-describe('RepoSyncService', () => {
+describe('Repoverse', () => {
   const exampleConfig = generateFakeConfig();
 
   describe('constructor', () => {
     it('should create an instance with the given configuration', () => {
-      const repoSyncService = new RepoSyncService(exampleConfig);
-      expect(repoSyncService).toBeDefined();
+      const repoverse = new Repoverse(exampleConfig);
+      expect(repoverse).toBeDefined();
       // Check if the config is set correctly
-      expect(repoSyncService.getConfig()).toEqual(exampleConfig);
+      expect(repoverse.getConfig()).toEqual(exampleConfig);
       // Check if octokit has been initialized with the accessToken
       expect(Octokit).toHaveBeenCalledWith({ auth: exampleConfig.accessToken });
     });
   });
 
-  describe('execute', () => {
-    let repoSyncService: RepoSyncService;
+  describe('synchronize', () => {
+    let repoverse: Repoverse;
     const exampleConfig = generateFakeConfig();
 
     beforeEach(() => {
-      repoSyncService = new RepoSyncService(exampleConfig);
+      repoverse = new Repoverse(exampleConfig);
       // Reset all mocks
       jest.clearAllMocks();
     });
@@ -158,7 +158,7 @@ describe('RepoSyncService', () => {
         }
       });
 
-      await repoSyncService.execute(sourceRepository, commits);
+      await repoverse.synchronize(sourceRepository, commits);
 
       const targetRepositoryConfigs = exampleConfig.repositories.filter(
         (_, index) => index !== sourceRepositoryIndex
@@ -248,7 +248,7 @@ describe('RepoSyncService', () => {
       const invalidSourceRepository = 'invalidformat';
       const commits = [generateFakeGitHubCommitInfo({})];
       await expect(
-        repoSyncService.execute(invalidSourceRepository, commits)
+        repoverse.synchronize(invalidSourceRepository, commits)
       ).rejects.toThrow(
         "The source repository must be in the format 'owner/repo'"
       );
@@ -258,7 +258,7 @@ describe('RepoSyncService', () => {
       const nonConfiguredRepo = 'nonexistent/owner-repo';
       const commits = [generateFakeGitHubCommitInfo({})];
       await expect(
-        repoSyncService.execute(nonConfiguredRepo, commits)
+        repoverse.synchronize(nonConfiguredRepo, commits)
       ).rejects.toThrow(
         'Source repository nonexistent/owner-repo is not in the list of repositories to sync'
       );
