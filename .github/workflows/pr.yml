@@ -9,12 +9,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: oven-sh/setup-bun@v1
+      - name: Checkout Repository
+        uses: actions/checkout@v3
         with:
-          bun-version: latest
-      - run: bun i
-      - run: bun run build
-      - run: bun run test
+          fetch-depth: 0
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+      - name: Install Dependencies
+        run: npm i
+      - name: Build Project
+        run: npm run build
+      - name: Run Test Suite
+        run: npm run test
       - name: Upload Code Coverage
         uses: codecov/codecov-action@v3.1.0
