@@ -99,7 +99,6 @@ jobs:
   repoverse:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: '20'
