@@ -1,7 +1,5 @@
 # **Repoverse** ![version](https://img.shields.io/badge/version-1.0.0-blue) ![license](https://img.shields.io/badge/license-MIT-green)
 
-`Repoverse` is a powerful tool designed for distributed systems and microservices. It automates the propagation of relevant commits across multiple repositories, ensuring consistency and saving you time.
-
 ## 📖 Table of Contents
 
 - [**Repoverse** ](#repoverse--)
@@ -20,7 +18,7 @@
 
 ## 🌐 Overview
 
-`Repoverse` is designed to keep your code synchronized across multiple repositories. It's perfect for distributed systems and microservices where some part of the code needs to be consistent.
+`Repoverse` automates code synchronization across multiple repositories by propagation of relevant commits, ensuring consistency and saving you time. It's most suitable for distributed systems and microservices where some part of the code needs to be synced.
 
 ## ⭐ Key Features
 
