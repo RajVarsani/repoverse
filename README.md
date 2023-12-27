@@ -45,13 +45,15 @@ Repoverse requires a configuration object to specify the repositories to sync an
       "owner": "example-user",
       "repo": "repo-to-sync-1",
       "path": "models/",
-      "branch": "dev"
+      "branch": "dev",
+      "reviewers": ["Maintainer1"]
     },
     {
       "owner": "example-user",
       "repo": "repo-to-sync-2",
       "path": "models/",
-      "branch": "dev"
+      "branch": "dev",
+      "reviewers": ["Maintainer2"]
     }
   ],
   "syncBranchPrefix": "sync-branch",
